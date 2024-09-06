@@ -40,6 +40,10 @@ $(call inherit-product, firmware/xiaomi/surya/Android.mk)
 # Sign keys
 -include vendor/private/keys/keys.mk
 
+# AAPT
+PRODUCT_AAPT_CONFIG := normal
+PRODUCT_AAPT_PREF_CONFIG := xxhdpi
+
 # API level, the device has been commercially launched on
 PRODUCT_SHIPPING_API_LEVEL := 29
 

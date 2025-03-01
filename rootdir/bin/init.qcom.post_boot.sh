@@ -309,6 +309,37 @@ case "$soc_id" in
     ;;
 esac
 
+function configure_read_ahead_kb_values() {
+    MemTotalStr=`cat /proc/meminfo | grep MemTotal`
+    MemTotal=${MemTotalStr:16:8}
+
+    dmpts=$(ls /sys/block/*/queue | grep -e dm -e mmc)
+
+    # Set 128 for <= 3GB &
+    # set 512 for >= 4GB targets.
+    if [ $MemTotal -le 3145728 ]; then
+        echo 128 > /sys/block/mmcblk0/bdi/read_ahead_kb
+        echo 128 > /sys/block/mmcblk0/bdi/nr_requests
+        echo 128 > /sys/block/mmcblk0rpmb/bdi/read_ahead_kb
+        echo 128 > /sys/block/mmcblk0rpmb/bdi/nr_requests
+        for dm in $dmpts; do
+            echo 128 > $dm/read_ahead_kb
+            echo 128 > $dm/nr_requests
+        done
+    else
+        echo 512 > /sys/block/mmcblk0/bdi/read_ahead_kb
+        echo 256 > /sys/block/mmcblk0/bdi/nr_requests
+        echo 512 > /sys/block/mmcblk0rpmb/bdi/read_ahead_kb
+        echo 256 > /sys/block/mmcblk0rpmb/bdi/nr_requests
+        for dm in $dmpts; do
+            echo 512 > $dm/read_ahead_kb
+            echo 256 > $dm/nr_requests
+        done
+    fi
+}
+
+configure_read_ahead_kb_values
+
 # Enable PowerHAL hint processing
 setprop vendor.powerhal.init 1
 

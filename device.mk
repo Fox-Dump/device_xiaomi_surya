@@ -34,6 +34,9 @@ $(call inherit-product-if-exists, vendor/oneplus/dolby/oplusdolby.mk)
 # Inherit Xiaomi Camera
 $(call inherit-product-if-exists, vendor/xiaomi/camera/device.mk)
 
+# Sign keys
+-include vendor/private/keys/keys.mk
+
 # API level, the device has been commercially launched on
 PRODUCT_SHIPPING_API_LEVEL := 29
 

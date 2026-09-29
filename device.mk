@@ -34,6 +34,9 @@ $(call inherit-product-if-exists, vendor/oneplus/dolby/oplusdolby.mk)
 # Inherit Xiaomi Camera
 $(call inherit-product-if-exists, vendor/xiaomi/camera/device.mk)
 
+# Inherit surya firmware images
+$(call inherit-product, firmware/xiaomi/surya/Android.mk)
+
 # Sign keys
 -include vendor/private/keys/keys.mk
 

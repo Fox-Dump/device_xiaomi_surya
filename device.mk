@@ -488,3 +488,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Call the proprietary setup
 $(call inherit-product, vendor/xiaomi/surya/surya-vendor.mk)
+
+# Lunaris Stuff
+$(call soong_config_set,surfaceflinger,frame_rate_category_high,120)
+$(call soong_config_set,surfaceflinger,frame_rate_category_min,60)
